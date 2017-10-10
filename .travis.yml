@@ -1,0 +1,10 @@
+language: python
+python:
+  - '2.7'
+cache: pip
+env:
+- TOXENV=py27
+install:
+  - pip install -r requirements.txt
+script:
+ - if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then python -m unittest discover; fi
