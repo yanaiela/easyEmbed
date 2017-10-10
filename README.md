@@ -1,5 +1,6 @@
 # EasyEmbed
-[![Build Status](https://travis-ci.org/yanaiela/embed2all.svg?branch=master)](https://travis-ci.org/yanaiela/embed2all)
+[![Build Status](https://travis-ci.org/yanaiela/easyEmbed.svg?branch=master)](https://travis-ci.org/yanaiela/easyEmbed)
+[![PyPI version](https://badge.fury.io/py/easyEmbed.svg)](https://badge.fury.io/py/easyEmbed)
 
 
 EasyEmbed is a tool for people who use pre-trained word embeddings which 
