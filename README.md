@@ -61,7 +61,7 @@ emb_file = emb.download(emb_type, download_dir)
  Once you have downloaded (or already have) the data
 ```python
 emb_file = 'path-to/word2vec_data.bin' # or the emb_file variable from previous section
-vocab, vectors, voc_path, emb_path = emb.persist_vocab_subset(emb_type, emb_file, words_set)
+vocab, embeds, voc_path, emb_path = emb.persist_vocab_subset(emb_type, emb_file, words_set)
 ```
 Notice: 
 * Big vocabulary pre-trained (lile the GloVe) require a lot of memory
