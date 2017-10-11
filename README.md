@@ -45,7 +45,7 @@ pip install easyEmbed
  ## Usage
  #### Init:
  ```python
-import easyEmbed as emb
+from easyEmbed import easyEmbed as emb
 emb_type = emb.Embeddings.w2v
 # emb_type = emb.Embeddings.glove # the alternative
 ```
@@ -80,7 +80,7 @@ vocab, embeds = emb.read_vocab_subset(emb_type, voc_path, emb_path)
 #### Full Usage Example
 ```python
 # First run
-import easyEmbed as emb
+from easyEmbed import easyEmbed as emb
 emb_type = emb.Embeddings.w2v
 download_dir = 'path-to-dir'
 emb_file = emb.download(emb_type, download_dir) 
