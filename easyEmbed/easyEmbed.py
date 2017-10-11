@@ -45,10 +45,13 @@ def persist_vocab_subset(emb_type, emb_file, words_set, missing_embed=lambda: np
             voc_path - the file path where the vocabulary dictionary was saved
             emb_path - the file path where the embedding matrix was saved
     """
+    emb_dir = SEP.join(emb_file.split(SEP)[:-1])
+    if not (os.path.exists(emb_dir + emb_type.name + '_' + emb_type.REDUCED_VOC) and
+                os.path.exists(emb_dir + emb_type.name + '_' + emb_type.REDUCED_EMB)):
+        raise IOError('reduced files already exist, please delete them first')
     if not os.path.exists(emb_file):
         raise IOError('embedding file does not exist, please download the file first')
     vocab, embeds = emb_type.get_vectors(emb_file, words_set, missing_embed)
-    emb_dir = SEP.join(emb_file.split(SEP)[:-1])
     voc_path, emb_path = emb_type.persist_reduced(vocab, embeds, emb_dir)
     return vocab, embeds, voc_path, emb_path
 
@@ -63,5 +66,3 @@ def read_vocab_subset(emb_type, voc_path, emb_path):
     """
     vocab, embeds = emb_type.load_reduced(voc_path, emb_path)
     return vocab, embeds
-
-

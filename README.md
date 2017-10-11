@@ -50,7 +50,7 @@ emb_type = emb.Embeddings.w2v
 # emb_type = emb.Embeddings.glove # the alternative
 ```
  
- #### For dowloading:
+ #### For dowloading the pre-trained embeddings:
  ```python
 download_dir = 'path-to-dir'
 emb_file = emb.download(emb_type, download_dir) 
@@ -84,7 +84,7 @@ import easyEmbed as emb
 emb_type = emb.Embeddings.w2v
 download_dir = 'path-to-dir'
 emb_file = emb.download(emb_type, download_dir) 
-vocab, vectors, voc_path, emb_path = emb.persist_vocab_subset(emb_type, emb_file, words_set)
+vocab, embeds, voc_path, emb_path = emb.persist_vocab_subset(emb_type, emb_file, words_set)
 
 # for the rest of your experiments
 vocab, embeds = emb.read_vocab_subset(emb_type, voc_path, emb_path)
@@ -100,5 +100,6 @@ vocab, embeds = emb.read_vocab_subset(emb_type, voc_path, emb_path)
 - [ ] Support for windows
 - [ ] Test for other python version
 - [ ] Add more tests
+
 
 * Any suggestions, feedback and PR are welcome

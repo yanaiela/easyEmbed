@@ -43,8 +43,8 @@ class BaseEmbedding(object):
         raise NotImplementedError
 
     def persist_reduced(self, vocab, embeds, directory):
-        if directory[-1] != '/':
-            directory += '/'
+        if directory[-1] != SEP:
+            directory += SEP
         vocab_n = directory + self.name + '_' + self.REDUCED_VOC
         embed_n = directory + self.name + '_' + self.REDUCED_EMB
         np.save(vocab_n, dict(vocab))
