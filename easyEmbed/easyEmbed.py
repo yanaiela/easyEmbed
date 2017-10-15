@@ -46,8 +46,8 @@ def persist_vocab_subset(emb_type, emb_file, words_set, missing_embed=lambda: np
             emb_path - the file path where the embedding matrix was saved
     """
     emb_dir = SEP.join(emb_file.split(SEP)[:-1])
-    if not (os.path.exists(emb_dir + emb_type.name + '_' + emb_type.REDUCED_VOC) and
-                os.path.exists(emb_dir + emb_type.name + '_' + emb_type.REDUCED_EMB)):
+    if (os.path.exists(emb_dir + '/' + emb_type.name + '_' + emb_type.REDUCED_VOC) and
+                os.path.exists(emb_dir + '/' + emb_type.name + '_' + emb_type.REDUCED_EMB)):
         raise IOError('reduced files already exist, please delete them first')
     if not os.path.exists(emb_file):
         raise IOError('embedding file does not exist, please download the file first')

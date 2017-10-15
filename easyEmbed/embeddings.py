@@ -126,3 +126,31 @@ class GloVe(BaseEmbedding):
     def get_vector(self, w, w2v):
         return w2v.loc[w].as_matrix()
 
+
+class CustomEmb(BaseEmbedding):
+    """
+    This is a custom embedding class. Its' relevant functions, name and file name
+    should be passed through the constructor.
+    """
+    def __init__(self, name, custom_emb_file, load_bin_f, word_exists_f, get_vec_f):
+        self.name = name
+        self.file = custom_emb_file
+
+        self.load_binaries = load_bin_f
+        self.word_exists = word_exists_f
+        self.get_vector = get_vec_f
+
+    def download(self, directory):
+        raise NotImplementedError('This method is not implemented. you should own your own embedding file')
+
+    def decompress(self, directory):
+        raise NotImplementedError('This method is not implemented. your file should already be decompressed')
+
+    def load_binaries(self, emb_file):
+        pass
+
+    def word_exists(self, w, w2v):
+        pass
+
+    def get_vector(self, w, w2v):
+        pass
