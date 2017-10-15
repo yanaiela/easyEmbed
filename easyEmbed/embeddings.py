@@ -19,12 +19,30 @@ class BaseEmbedding(object):
     REDUCED_EMB = 'reduced_embeddings.npy'
 
     def download(self, directory):
+        """
+        Downloading the pre-trained word embeddings
+        :param directory: where to download the file(s) to
+        :return: nothing
+        """
         raise NotImplementedError
 
     def decompress(self, emb_file):
+        """
+        Decompressing (if needed) the downloaded file
+        :param emb_file: downloaded file
+        :return: nothing
+        """
         raise NotImplementedError
 
-    def get_vectors(self, emb_file, vocab, missing_embed):
+    def get_vectors(self, emb_file, vocab, missing_embed, normalize=False):
+        """
+        Building the internal (needed) representation for the development process
+        :param emb_file: the pre-trained embedding file
+        :param vocab: the relevant vocabulary of the train, dev and test
+        :param missing_embed: a function which is called in case of a missing word.
+        Expecting a numpy vector
+        :return: dictionary of the vocabulary to their new indices and a numpy matrix of the relevant vocabulary
+        """
         w2v = self.load_binaries(emb_file)
 
         words = defaultdict(itertools.count(0).next)
@@ -37,7 +55,11 @@ class BaseEmbedding(object):
                 embeds.append(self.get_vector(w, w2v))
             else:
                 embeds.append(missing_embed().flatten())
-        return dict(words), np.array(embeds)
+        embeds = np.array(embeds)
+        if normalize:
+            row_norm = np.sum(np.abs(embeds) ** 2, axis=-1) ** (1. / 2)
+            embeds /= row_norm[:, np.newaxis]
+        return dict(words), embeds
 
     def load_binaries(self, emb_file):
         raise NotImplementedError

@@ -31,12 +31,13 @@ def download(emb_type, directory='~/.embeddings'):
     return f_emb
 
 
-def persist_vocab_subset(emb_type, emb_file, words_set, missing_embed=lambda: np.random.rand(1, 300)):
+def persist_vocab_subset(emb_type, emb_file, word_set, missing_embed=lambda: np.random.rand(1, 300),
+                         normalize=False):
     """
     Extracting the required vocabulary from the word embeddings.
     :param emb_type: One of the supported Embedding classes (Word2Vec, GloVe etc..)
     :param emb_file: The embedding file which was downloaded (should be the decompressed file)
-    :param words_set: a list of string - all relevant words for the development stage
+    :param word_set: a list of string - all relevant words for the development stage
     :param missing_embed: a function which fills up an embedding vector when such is missing.
             default one is a random vector (1,300) taken from a uniform distribution over [0,1).
             It should return a numpy 1 dimension array with same dimension as the rest embeddings
@@ -50,8 +51,9 @@ def persist_vocab_subset(emb_type, emb_file, words_set, missing_embed=lambda: np
                 os.path.exists(emb_dir + '/' + emb_type.name + '_' + emb_type.REDUCED_EMB)):
         raise IOError('reduced files already exist, please delete them first')
     if not os.path.exists(emb_file):
-        raise IOError('embedding file does not exist, please download the file first')
-    vocab, embeds = emb_type.get_vectors(emb_file, words_set, missing_embed)
+        print emb_file
+        raise ValueError('embedding file does not exist, please download the file first')
+    vocab, embeds = emb_type.get_vectors(emb_file, word_set, missing_embed, normalize)
     voc_path, emb_path = emb_type.persist_reduced(vocab, embeds, emb_dir)
     return vocab, embeds, voc_path, emb_path
 

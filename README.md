@@ -24,7 +24,11 @@ make you lose much time of waiting for the matrices to load.
     * [Google Word2Vec](https://code.google.com/archive/p/word2vec/)
         * Google News dataset (~100b words, 3 million words and phrases, 300-dim)
     * [Stanford GloVe](https://github.com/stanfordnlp/GloVe)
-        * Common Crawl (840B tokens, 2.2M vocab, cased, 300-dim) 
+        * Common Crawl (840B tokens, 2.2M vocab, cased, 300-dim)
+    * Custom pre-trained!
+        * Trained your own model? no problem, just implement a few
+         methods for telling the tool how to load and use them,
+         and you're good to go.
 * Keep in separate files only the words you care about, for avoiding
  large amount of time for the full matrix to load.
 * Keeping a unify format for all embeddings. You don't have to deal with
@@ -61,7 +65,7 @@ emb_file = emb.download(emb_type, download_dir)
  Once you have downloaded (or already have) the data
 ```python
 emb_file = 'path-to/word2vec_data.bin' # or the emb_file variable from previous section
-vocab, embeds, voc_path, emb_path = emb.persist_vocab_subset(emb_type, emb_file, words_set)
+vocab, embeds, voc_path, emb_path = emb.persist_vocab_subset(emb_type, emb_file, word_set)
 ```
 Notice: 
 * Big vocabulary pre-trained (lile the GloVe) require a lot of memory
@@ -84,10 +88,28 @@ from easyEmbed import easyEmbed as emb
 emb_type = emb.Embeddings.w2v
 download_dir = 'path-to-dir'
 emb_file = emb.download(emb_type, download_dir) 
-vocab, embeds, voc_path, emb_path = emb.persist_vocab_subset(emb_type, emb_file, words_set)
+vocab, embeds, voc_path, emb_path = emb.persist_vocab_subset(emb_type, emb_file, word_set)
 
 # for the rest of your experiments
 vocab, embeds = emb.read_vocab_subset(emb_type, voc_path, emb_path)
+```
+
+
+#### Custom model usage
+* This imaginary pre-trained is similar to the GloVe embeddings,
+where each row consists of the word itself, space and the vecor
+```python
+import pandas as pd
+import csv
+load_emb_f = lambda f: pd.read_table(f, sep=" ", index_col=0, header=None, quoting=csv.QUOTE_NONE)
+word_exists_f = lambda w, w2v: w in w2v.index.values
+get_vector_f = lambda w, w2v: w2v.loc[w].as_matrix()
+
+emb_f = 'path-to/vectors'
+type = CustomEmb('foo-vectors', emb_f,
+                          load_emb_f, word_exists_f, get_vector_f)
+emb_file = emb_f
+vocab, embeds, voc_path, emb_path = emb.persist_vocab_subset(type, emb_file, words_set)
 ```
 
 #### MISC
