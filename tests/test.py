@@ -17,6 +17,11 @@ class TestW2v(unittest.TestCase):
     emb_file = 'data/w2v_reduced'
     word_list = ['for', 'said', 'in', 'that']
 
+    def tearDown(self):
+        import os
+        os.remove('data/word2vec_reduced_embeddings.npy')
+        os.remove('data/word2vec_reduced_vocab.npy')
+
     def testLoadW2V(self):
         vocab, embeds, voc_path, emb_path = emb.persist_vocab_subset(self.emb_type,
                                                                      self.emb_file, self.word_list)
