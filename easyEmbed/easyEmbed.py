@@ -66,5 +66,7 @@ def read_vocab_subset(emb_type, voc_path, emb_path):
     :param emb_path: path to the embedding file
     :return: the vocabulary dictionary (maps between word and id) and the embedding mat
     """
+    if not (os.path.exists(voc_path) and os.path.exists(emb_path)):
+        raise IOError('vocabulary / embedding binaries files doesn\'t exists')
     vocab, embeds = emb_type.load_reduced(voc_path, emb_path)
     return vocab, embeds

@@ -51,3 +51,17 @@ class TestGloVe(unittest.TestCase):
         self.assertTrue('apple' in vocab)
         self.assertTrue('horse' in vocab)
         self.assertTrue(all([len(x) == 300 for x in embeds]))
+
+
+class TestIO(unittest.TestCase):
+
+    def testLoad(self):
+        emb_type = emb.Embeddings.w2v
+        self.assertRaises(IOError, lambda: emb.read_vocab_subset(emb_type,
+                                                                 'tests/glove_reduced_vocab.npy', 'non-existing'))
+        self.assertRaises(IOError, lambda: emb.read_vocab_subset(emb_type,
+                                                                 'non-existing', 'tests/glove_reduced_embeddings.npy'))
+        self.assertRaises(IOError, lambda: emb.read_vocab_subset(emb_type,
+                                                                 'non-existing', 'non-existing'))
+
+

@@ -99,6 +99,7 @@ vocab, embeds = emb.read_vocab_subset(emb_type, voc_path, emb_path)
 * This imaginary pre-trained is similar to the GloVe embeddings,
 where each row consists of the word itself, space and the vecor
 ```python
+from easyEmbed import easyEmbed as emb
 import pandas as pd
 import csv
 load_emb_f = lambda f: pd.read_table(f, sep=" ", index_col=0, header=None, quoting=csv.QUOTE_NONE)
@@ -106,7 +107,7 @@ word_exists_f = lambda w, w2v: w in w2v.index.values
 get_vector_f = lambda w, w2v: w2v.loc[w].as_matrix()
 
 emb_f = 'path-to/vectors'
-type = CustomEmb('foo-vectors', emb_f,
+type = emb.CustomEmb('foo-vectors', emb_f,
                           load_emb_f, word_exists_f, get_vector_f)
 emb_file = emb_f
 vocab, embeds, voc_path, emb_path = emb.persist_vocab_subset(type, emb_file, words_set)

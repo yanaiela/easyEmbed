@@ -162,6 +162,9 @@ class CustomEmb(BaseEmbedding):
         self.word_exists = word_exists_f
         self.get_vector = get_vec_f
 
+    def __init__(self):
+        pass
+
     def download(self, directory):
         raise NotImplementedError('This method is not implemented. you should own your own embedding file')
 
