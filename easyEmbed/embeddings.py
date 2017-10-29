@@ -136,7 +136,7 @@ class Word2VecF(BaseEmbedding):
             directory += SEP
         inF = bz2.BZ2File(directory + self.file + self._compress).read()
         outF = open(directory + self.file, 'wb')
-        outF.write(inF.read())
+        outF.write(inF)
         inF.close()
         outF.close()
 
