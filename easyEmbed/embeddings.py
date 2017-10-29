@@ -127,7 +127,7 @@ class Word2VecF(BaseEmbedding):
         self._compress = '.bz2'
 
     def download(self, directory):
-        subprocess.call(['wget', GLOVE_DOWNLOAD_URL, '-P', directory])
+        subprocess.call(['wget', W2VF_DOWNLOAD_URL, '-P', directory])
         self.decompress(directory)
         return self.file
 

@@ -5,6 +5,7 @@ from embeddings import *
 class Embeddings(object):
     w2v = Word2Vec()
     glove = GloVe()
+    w2vf = Word2VecF()
     # add more here...
 
 
