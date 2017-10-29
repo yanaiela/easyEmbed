@@ -2,6 +2,7 @@
 import subprocess
 import gzip
 import zipfile
+import bz2
 from collections import defaultdict
 import itertools
 import numpy as np
@@ -9,6 +10,7 @@ import os
 
 W2V_DOWNLOAD_SCRIPT = './word2vec-download300model.sh'
 GLOVE_DOWNLOAD_URL = 'http://nlp.stanford.edu/data/glove.840B.300d.zip'
+W2VF_DOWNLOAD_URL = 'http://u.cs.biu.ac.il/~yogo/data/syntemb/deps.words.bz2'
 
 SEP = os.sep
 
@@ -116,6 +118,39 @@ class Word2Vec(BaseEmbedding):
 
     def get_vector(self, w, w2v):
         return w2v[w]
+
+
+class Word2VecF(BaseEmbedding):
+    def __init__(self):
+        self.name = 'word2vecf'
+        self.file = 'deps.words'
+        self._compress = '.bz2'
+
+    def download(self, directory):
+        subprocess.call(['wget', GLOVE_DOWNLOAD_URL, '-P', directory])
+        self.decompress(directory)
+        return self.file
+
+    def decompress(self, directory):
+        if directory[-1] != SEP:
+            directory += SEP
+        inF = bz2.BZ2File(directory + self.file + self._compress, 'rb').read()
+        outF = open(directory + self.file, 'wb')
+        outF.write(inF.read())
+        inF.close()
+        outF.close()
+
+    def load_binaries(self, emb_file):
+        import pandas as pd
+        import csv
+        w2v = pd.read_table(emb_file, sep=" ", index_col=0, header=None, quoting=csv.QUOTE_NONE)
+        return w2v
+
+    def word_exists(self, w, w2v):
+        return w in w2v.index.values
+
+    def get_vector(self, w, w2v):
+        return w2v.loc[w].as_matrix()
 
 
 class GloVe(BaseEmbedding):
