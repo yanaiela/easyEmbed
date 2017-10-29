@@ -134,7 +134,7 @@ class Word2VecF(BaseEmbedding):
     def decompress(self, directory):
         if directory[-1] != SEP:
             directory += SEP
-        inF = bz2.BZ2File(directory + self.file + self._compress, 'rb').read()
+        inF = bz2.BZ2File(directory + self.file + self._compress).read()
         outF = open(directory + self.file, 'wb')
         outF.write(inF.read())
         inF.close()
