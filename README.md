@@ -25,6 +25,8 @@ make you lose much time of waiting for the matrices to load.
         * Google News dataset (~100b words, 3 million words and phrases, 300-dim)
     * [Stanford GloVe](https://github.com/stanfordnlp/GloVe)
         * Common Crawl (840B tokens, 2.2M vocab, cased, 300-dim)
+    * [Word2VecF](https://levyomer.wordpress.com/2014/04/25/dependency-based-word-embeddings/)
+        * Wikipedia dataset - dependency-based embeddings (175K vocab, 300-dim)
     * Custom pre-trained!
         * Trained your own model? no problem, just implement a few
          methods for telling the tool how to load and use them,
@@ -118,8 +120,8 @@ vocab, embeds, voc_path, emb_path = emb.persist_vocab_subset(type, emb_file, wor
 
 ## TODO
 - [ ] More vectors size for GloVe
-- [ ] Add Word2vecf 
-- [ ] Add fastText embeddings
+- [x] Add Word2vecf 
+- [x] Custom embeddings
 - [ ] Support for windows
 - [ ] Test for other python version
 - [ ] Add more tests
