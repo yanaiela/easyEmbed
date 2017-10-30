@@ -15,7 +15,7 @@ make you lose much time of waiting for the matrices to load.
     
     With this tool one can load the matrix once, supply it the models' relevant
      words (for the development phase it's ok to supply also words which doesn't
-     appear in train), and save them apart of the original file. Just dont forget
+     appear in train), and save them apart from the original file. Just dont forget
      when the model is ready for deployment to use the whole matrix embeddings. 
 
 
@@ -33,7 +33,7 @@ make you lose much time of waiting for the matrices to load.
          and you're good to go.
 * Keep in separate files only the words you care about, for avoiding
  large amount of time for the full matrix to load.
-* Keeping a unify format for all embeddings. You don't have to deal with
+* Keeping a unified format for all embeddings. You don't have to deal with
 how the pre-trained are saved or their format
  
  
@@ -43,7 +43,7 @@ how the pre-trained are saved or their format
  * if using GloVe: pandas, csv
  
  
- ## Instalation
+ ## Installation
  ```bash
 pip install easyEmbed
 ```
@@ -53,10 +53,12 @@ pip install easyEmbed
  ```python
 from easyEmbed import easyEmbed as emb
 emb_type = emb.Embeddings.w2v
-# emb_type = emb.Embeddings.glove # the alternative
+# the alternatives:
+# emb_type = emb.Embeddings.glove
+# emb_type = emb.Embeddings.w2vf
 ```
  
- #### For dowloading the pre-trained embeddings:
+ #### For downloading the pre-trained embeddings:
  ```python
 download_dir = 'path-to-dir'
 emb_file = emb.download(emb_type, download_dir) 
