@@ -39,6 +39,7 @@ def persist_vocab_subset(emb_type, emb_file, word_set, missing_embed=lambda: np.
     :param emb_type: One of the supported Embedding classes (Word2Vec, GloVe etc..)
     :param emb_file: The embedding file which was downloaded (should be the decompressed file)
     :param word_set: a list of string - all relevant words for the development stage
+                        this list can be empty, which will result keeping all of the embeddings
     :param missing_embed: a function which fills up an embedding vector when such is missing.
             default one is a random vector (1,300) taken from a uniform distribution over [0,1).
             It should return a numpy 1 dimension array with same dimension as the rest embeddings

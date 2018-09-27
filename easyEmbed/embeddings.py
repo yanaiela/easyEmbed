@@ -1,4 +1,3 @@
-# Inner file.
 import subprocess
 import gzip
 import zipfile
@@ -41,6 +40,7 @@ class BaseEmbedding(object):
         Building the internal (needed) representation for the development process
         :param emb_file: the pre-trained embedding file
         :param vocab: the relevant vocabulary of the train, dev and test
+                        if vocab is an empty list, this method will keep all the embeddings
         :param missing_embed: a function which is called in case of a missing word.
         Expecting a numpy vector
         :return: dictionary of the vocabulary to their new indices and a numpy matrix of the relevant vocabulary
@@ -50,13 +50,15 @@ class BaseEmbedding(object):
         words = defaultdict(itertools.count(0).next)
         embeds = []
         for w in vocab:
-            # if w in w2v:
             words[w]
             if self.word_exists(w, w2v):
-                # embeds.append(w2v[w])
                 embeds.append(self.get_vector(w, w2v))
             else:
                 embeds.append(missing_embed().flatten())
+        if len(vocab) == 0:
+            for k, v in zip(self.get_keys_values(w2v)):
+                words[k]
+                embeds.append(v)
         embeds = np.array(embeds)
         if normalize:
             row_norm = np.sum(np.abs(embeds) ** 2, axis=-1) ** (1. / 2)
@@ -64,6 +66,9 @@ class BaseEmbedding(object):
         return dict(words), embeds
 
     def load_binaries(self, emb_file):
+        raise NotImplementedError
+
+    def get_keys_values(self, w2v):
         raise NotImplementedError
 
     def persist_reduced(self, vocab, embeds, directory):
@@ -112,6 +117,9 @@ class Word2Vec(BaseEmbedding):
         import gensim
         w2v = gensim.models.KeyedVectors.load_word2vec_format(emb_file, binary=True)
         return w2v
+
+    def get_keys_values(self, w2v):
+        return w2v.vocab.keys(), w2v.vectors
 
     def word_exists(self, w, w2v):
         return w in w2v
